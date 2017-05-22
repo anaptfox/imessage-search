@@ -1,22 +1,51 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron ."
-  },
-  "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
-  "devDependencies": {
-    "electron": "^1.4.1"
-  }
+    "name": "imessage-search",
+    "version": "1.0.0",
+    "description": "A minimal Electron application",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "build": "webpack",
+        "postinstall": "install-app-deps",
+        "release": "build",
+        "watch": "watchify scripts/app.js -t babelify -o bundle.js --debug --verbose"
+    },
+    "repository": "https://github.com/electron/electron-quick-start",
+    "keywords": [
+        "Electron",
+        "quick",
+        "start",
+        "tutorial",
+        "demo"
+    ],
+    "author": "GitHub",
+    "license": "CC0-1.0",
+    "devDependencies": {
+        "babel": "6",
+        "babel-loader": "^7.0.0",
+        "babel-preset-es2015": "^6.24.1",
+        "electron": "^1.6.8",
+        "electron-compile": "^6.4.1",
+        "react": "^15.5.4",
+        "electron-builder": "^17.9.0",
+        "webpack": "^2.5.1"
+    },
+    "dependencies": {
+        "babel-preset-react": "^6.24.1",
+        "babelify": "^7.3.0",
+        "electron-config": "^1.0.0",
+        "electron-reload": "^1.2.0",
+        "electron-sqlite3": "^0.0.3",
+        "json-loader": "^0.5.4",
+        "jxa": "^2.0.3",
+        "knex": "^0.13.0",
+        "moment": "^2.18.1",
+        "osa2": "^0.2.1",
+        "prop-types": "^15.5.10",
+        "q": "^1.5.0",
+        "react-dom": "^15.5.4",
+        "sequelize": "^3.30.4",
+        "sqlite3": "^3.1.8",
+        "watchify": "^3.9.0"
+    }
 }
