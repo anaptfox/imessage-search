@@ -24922,11 +24922,21 @@ var Message = function (_React$Component) {
                 ' - ',
                 date,
                 ' - ',
-                this.state.message.id,
-                ' - ',
                 this.state.message.text
             );
 
+            if (this.state.message.is_from_me) {
+                message = _react2.default.createElement(
+                    'li',
+                    null,
+                    'Taron Foxworth - ',
+                    date,
+                    ' - ',
+                    this.state.name,
+                    ' - ',
+                    this.state.message.text
+                );
+            }
             return _react2.default.createElement(
                 'li',
                 null,

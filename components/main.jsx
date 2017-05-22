@@ -43,8 +43,12 @@ class Message extends React.Component {
     render() {
         //console.log(this.state.data[0])
         var date = moment('2001-01-01').add(moment(this.state.message.date).valueOf(), 'seconds').format("dddd, MMMM Do YYYY, h:mm:ss a")
-        var message = (<li>{this.state.name} - {date} - {this.state.message.id} - {this.state.message.text}</li>)
+        var message = (<li>{this.state.name} - {date} - {this.state.message.text}</li>)
         
+        if(this.state.message.is_from_me) {
+          message = (<li>Taron Foxworth - {date} - {this.state.name} - {this.state.message.text}</li>)
+          
+        }
         return (<li> 
             {message}  
         </li>);

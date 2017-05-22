@@ -12,7 +12,7 @@ var knex = require('knex')({
 
 window.sql.getMessages = function(done) {
     knex('message')
-        .where('text', 'like', '%shoe%')
+        .where('text', 'like', '%food%')
         .join('handle', 'handle.ROWID', 'message.handle_id')
         .asCallback(done);
 }
