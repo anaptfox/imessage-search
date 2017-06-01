@@ -24865,8 +24865,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var osa = __webpack_require__(214);
-// const Config = require('electron-config');
-// const config = new Config();
 
 function getName(number, done) {
     var cache = localStorage.getItem(number);
@@ -24882,6 +24880,7 @@ function getName(number, done) {
         done(null, name);
         //console.log(name)
     }).catch(function (err) {
+        console.log('Could not find name for ' + number);
         done(null, 'Not Found');
     });
 }
@@ -24916,7 +24915,7 @@ var Message = function (_React$Component) {
             //console.log(this.state.data[0])
             var date = (0, _moment2.default)('2001-01-01').add((0, _moment2.default)(this.state.message.date).valueOf(), 'seconds').format("dddd, MMMM Do YYYY, h:mm:ss a");
             var message = _react2.default.createElement(
-                'li',
+                'p',
                 null,
                 this.state.name,
                 ' - ',
@@ -24927,7 +24926,7 @@ var Message = function (_React$Component) {
 
             if (this.state.message.is_from_me) {
                 message = _react2.default.createElement(
-                    'li',
+                    'p',
                     null,
                     'Taron Foxworth - ',
                     date,
@@ -24956,33 +24955,124 @@ var Main = function (_React$Component2) {
 
         var _this2 = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
+        _this2.handleSubmit = _this2.handleSubmit.bind(_this2);
+        _this2.back = _this2.back.bind(_this2);
         _this2.state = {
-            data: []
+            data: [],
+            searchTerm: '',
+            loading: false,
+            clean: true
         };
         return _this2;
     }
 
     _createClass(Main, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            window.sql.getMessages(function (err, data) {
+        key: 'back',
+        value: function back() {
+            this.setState({
+                clean: true
+            });
+        }
+    }, {
+        key: 'handleSubmit',
+        value: function handleSubmit(event) {
+            this.setState({
+                loading: true,
+                clean: false
+            });
+            window.sql.getMessagesByValue(this.input.value, function (err, data) {
                 this.setState({
-                    data: data
+                    data: data,
+                    loading: false
                 });
             }.bind(this));
+            event.preventDefault();
         }
     }, {
         key: 'render',
         value: function render() {
-            console.log(this.state.data[0]);
-            var listItems = this.state.data.map(function (message) {
+            var _this3 = this;
 
+            //console.log(this.state.data[0])
+            var listItems = this.state.data.map(function (message) {
                 return _react2.default.createElement(Message, { key: message.guid, message: message });
             });
 
+            if (this.state.clean) {
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'column' },
+                    _react2.default.createElement(
+                        'h1',
+                        null,
+                        'IMessage Search'
+                    ),
+                    _react2.default.createElement(
+                        'form',
+                        { onSubmit: this.handleSubmit },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'field has-addons' },
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'control' },
+                                _react2.default.createElement('input', { className: 'input', ref: function ref(input) {
+                                        return _this3.input = input;
+                                    }, type: 'text', placeholder: 'Search by term' })
+                            ),
+                            _react2.default.createElement(
+                                'p',
+                                { className: 'control' },
+                                _react2.default.createElement(
+                                    'a',
+                                    { type: 'submit', className: 'button is-info' },
+                                    'Search'
+                                )
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'ul',
+                        null,
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            ' Wecome to Imessage Search. Just type in the term you\'re looking for '
+                        )
+                    )
+                );
+            }
+
+            if (this.state.loading) {
+                return _react2.default.createElement(
+                    'div',
+                    { className: 'column' },
+                    _react2.default.createElement(
+                        'h1',
+                        null,
+                        'IMessage Search'
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        ' Loading '
+                    )
+                );
+            }
+
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'column' },
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    'IMessage Search'
+                ),
+                _react2.default.createElement(
+                    'button',
+                    { className: 'button', onClick: this.back },
+                    ' Back '
+                ),
                 _react2.default.createElement(
                     'ul',
                     null,
@@ -25027,8 +25117,6 @@ var _main = __webpack_require__(196);
 var _main2 = _interopRequireDefault(_main);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-console.log(window.sql.data);
 
 window.onload = function () {
     _reactDom2.default.render(_react2.default.createElement(_main2.default, null), document.getElementById('app'));
