@@ -35,7 +35,6 @@
         "babelify": "^7.3.0",
         "electron-config": "^1.0.0",
         "electron-reload": "^1.2.0",
-        "electron-sqlite3": "^0.0.3",
         "json-loader": "^0.5.4",
         "jxa": "^2.0.3",
         "knex": "^0.13.0",
